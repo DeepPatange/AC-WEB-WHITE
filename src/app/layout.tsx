@@ -94,21 +94,22 @@ export default function RootLayout({
                       0.2126 0.7152 0.0722 0 0
                       0 0 0 1 0"
             />
-            {/* Ramp knees ≈ 0.30 (black→red) and ≈ 0.46 (red→white): most of the
-                scene (water, ground, ships) lands in white; only mid-dark
-                containers go red and the deepest shadows go black. */}
+            {/* No black. Darkest tones -> brand RED (a natural dark accent),
+                mid tones -> light silver-gray, brights -> white. Result: a clean
+                white/silver scene with red accents and soft gray shadows, like
+                the reference render. */}
             <feComponentTransfer>
               <feFuncR
                 type="table"
-                tableValues="0.11 0.11 0.11 0.11 0.886 0.886 0.995 0.995 0.995 0.995 0.995 0.995 0.995"
+                tableValues="0.886 0.886 0.886 0.81 0.81 0.81 0.81 0.995 0.995 0.995 0.995 0.995 0.995"
               />
               <feFuncG
                 type="table"
-                tableValues="0.11 0.11 0.11 0.11 0.106 0.106 0.995 0.995 0.995 0.995 0.995 0.995 0.995"
+                tableValues="0.106 0.106 0.106 0.81 0.81 0.81 0.81 0.995 0.995 0.995 0.995 0.995 0.995"
               />
               <feFuncB
                 type="table"
-                tableValues="0.12 0.12 0.12 0.12 0.133 0.133 0.995 0.995 0.995 0.995 0.995 0.995 0.995"
+                tableValues="0.133 0.133 0.133 0.835 0.835 0.835 0.835 0.995 0.995 0.995 0.995 0.995 0.995"
               />
             </feComponentTransfer>
           </filter>
