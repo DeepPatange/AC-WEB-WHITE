@@ -73,6 +73,46 @@ export default function RootLayout({
       className={`${inter.variable} ${display.variable} ${mono.variable}`}
     >
       <body>
+        {/* WHITE-THEME tritone for the Spline hero. Maps the scene onto a
+            WHITE-dominant palette: the bright water/ground/ships become white
+            (so the scene blends into the white page and the black headline reads
+            over it), mid-dark elements become brand RED, and the darkest shadows
+            become near-black. Referenced from globals.css:
+            `.spline-tint canvas { filter: url(#accord-tritone-white) }`. */}
+        <svg
+          aria-hidden
+          focusable="false"
+          width="0"
+          height="0"
+          style={{ position: "absolute", width: 0, height: 0 }}
+        >
+          <filter id="accord-tritone-white" colorInterpolationFilters="sRGB">
+            <feColorMatrix
+              type="matrix"
+              values="0.2126 0.7152 0.0722 0 0
+                      0.2126 0.7152 0.0722 0 0
+                      0.2126 0.7152 0.0722 0 0
+                      0 0 0 1 0"
+            />
+            {/* Ramp knees ≈ 0.30 (black→red) and ≈ 0.46 (red→white): most of the
+                scene (water, ground, ships) lands in white; only mid-dark
+                containers go red and the deepest shadows go black. */}
+            <feComponentTransfer>
+              <feFuncR
+                type="table"
+                tableValues="0.11 0.11 0.11 0.11 0.886 0.886 0.995 0.995 0.995 0.995 0.995 0.995 0.995"
+              />
+              <feFuncG
+                type="table"
+                tableValues="0.11 0.11 0.11 0.11 0.106 0.106 0.995 0.995 0.995 0.995 0.995 0.995 0.995"
+              />
+              <feFuncB
+                type="table"
+                tableValues="0.12 0.12 0.12 0.12 0.133 0.133 0.995 0.995 0.995 0.995 0.995 0.995 0.995"
+              />
+            </feComponentTransfer>
+          </filter>
+        </svg>
         <MotionConfig reducedMotion="user">
           <ScrollProgress />
           <SmoothScroll>{children}</SmoothScroll>

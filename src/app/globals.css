@@ -192,11 +192,12 @@ footer[id] {
   scroll-margin-top: 5.5rem;
 }
 
-/* The original, first blue→red tint (from the agency redesign). A single
-   hue-rotate swings the scene's native blue toward the Accord red while keeping
-   its full depth and detail — GPU-cheap, no posterisation. */
+/* WHITE THEME: recolour the Spline scene to a WHITE-dominant palette (white
+   water/ground/ships, red mid-tones, black shadows) so it blends into the white
+   page and the black hero headline reads over it. Mapping lives in the SVG
+   filter #accord-tritone-white (layout.tsx). */
 .spline-tint canvas {
-  filter: hue-rotate(143deg) saturate(1.08) brightness(1.02) contrast(1.05);
+  filter: url(#accord-tritone-white);
 }
 
 @layer utilities {
