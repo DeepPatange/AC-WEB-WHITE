@@ -94,22 +94,22 @@ export default function RootLayout({
                       0.2126 0.7152 0.0722 0 0
                       0 0 0 1 0"
             />
-            {/* No black. Darkest tones -> brand RED (a natural dark accent),
-                mid tones -> light silver-gray, brights -> white. Result: a clean
-                white/silver scene with red accents and soft gray shadows, like
-                the reference render. */}
+            {/* Soft 4-tone quadtone, smoothly interpolated (not hard bands) so
+                the scene reads muted, not sharp: deepest shadows -> soft charcoal
+                (black), dark tones -> a MUTED red, mids -> soft grey, brights ->
+                soft white. White base with grey / red / black accents. */}
             <feComponentTransfer>
               <feFuncR
                 type="table"
-                tableValues="0.886 0.886 0.886 0.81 0.81 0.81 0.81 0.995 0.995 0.995 0.995 0.995 0.995"
+                tableValues="0.16 0.178 0.316 0.705 0.756 0.766 0.793 0.821 0.849 0.877 0.904 0.932 0.96"
               />
               <feFuncG
                 type="table"
-                tableValues="0.106 0.106 0.106 0.81 0.81 0.81 0.81 0.995 0.995 0.995 0.995 0.995 0.995"
+                tableValues="0.16 0.178 0.207 0.261 0.524 0.766 0.793 0.821 0.849 0.877 0.904 0.932 0.96"
               />
               <feFuncB
                 type="table"
-                tableValues="0.133 0.133 0.133 0.835 0.835 0.835 0.835 0.995 0.995 0.995 0.995 0.995 0.995"
+                tableValues="0.18 0.198 0.217 0.240 0.528 0.795 0.819 0.843 0.868 0.892 0.916 0.941 0.965"
               />
             </feComponentTransfer>
           </filter>
