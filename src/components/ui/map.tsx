@@ -40,13 +40,13 @@ export function WorldMap({
     []
   );
 
-  // Faint neutral dots on a transparent background so the section's dark
-  // surface shows through; brand-red arcs/nodes are drawn over the top.
+  // Mid-grey dots so the world map reads on the white theme's light surface;
+  // brand-red arcs/nodes are drawn over the top.
   const svgMap = useMemo(
     () =>
       map.getSVG({
-        radius: 0.22,
-        color: "#FFFFFF26",
+        radius: 0.24,
+        color: "#8B92A0",
         shape: "circle",
         backgroundColor: "transparent",
       }),

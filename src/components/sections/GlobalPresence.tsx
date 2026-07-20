@@ -102,8 +102,8 @@ export default function GlobalPresence() {
   const svgMap = useMemo(() => {
     const map = new DottedMap({ height: 100, grid: "diagonal" });
     return map.getSVG({
-      radius: 0.22,
-      color: "#FFFFFF24",
+      radius: 0.24,
+      color: "#8B92A0",
       shape: "circle",
       backgroundColor: "transparent",
     });

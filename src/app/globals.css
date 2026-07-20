@@ -252,3 +252,34 @@ html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
+/* ============================================================================
+   LIGHT-THEME CONTRAST FIXES
+   The global white->near-black token remap makes text readable on the white
+   page, but it inverts a few elements that are meant to stay LIGHT because they
+   sit on RED (or dark) surfaces — button labels, arrow chips, the footer CTA
+   pill. These rules restore them. Placed last so they win over the utilities.
+   ========================================================================== */
+
+/* Solid brand-red buttons keep a WHITE label + white glyphs. */
+.bg-accord-red {
+  color: #fff !important;
+}
+.bg-accord-red .text-white {
+  color: #fff !important;
+}
+
+/* Arrow chips (white circle, red glyph) inside red buttons stay white. */
+.bg-accord-red .bg-white {
+  background-color: #fff !important;
+}
+
+/* Footer CTA: a solid WHITE pill on the red band — keep it white with a red
+   label; its inner red arrow-chip keeps a white glyph. */
+a.bg-white.text-accord-red {
+  background-color: #fff !important;
+  color: #e11b22 !important;
+}
+a.bg-white.text-accord-red .text-white {
+  color: #fff !important;
+}

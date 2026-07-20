@@ -49,8 +49,8 @@ const PIN = projectPoint(MUMBAI.lat, MUMBAI.lng);
 /* Generated once at module scope — identical recipe to the Presence map so the
    two cards read as one system. */
 const dottedMapSvg = new DottedMap({ height: 100, grid: "diagonal" }).getSVG({
-  radius: 0.22,
-  color: "#FFFFFF26",
+  radius: 0.24,
+  color: "#8B92A0",
   shape: "circle",
   backgroundColor: "transparent",
 });
