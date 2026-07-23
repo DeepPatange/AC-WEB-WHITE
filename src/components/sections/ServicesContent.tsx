@@ -159,7 +159,7 @@ function ServicesIntro() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.unsplash.com/photo-1494412651409-8963ce7935a7?w=1100&h=850&fit=crop&crop=entropy&auto=format&q=74"
+              src="https://images.unsplash.com/photo-1494412651409-8963ce7935a7?w=1200&auto=format&q=70"
               alt="Imported chemical containers staged at a port terminal"
               loading="lazy"
               className="aspect-[4/3] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"

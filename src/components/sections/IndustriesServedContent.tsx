@@ -42,8 +42,8 @@ const INDUSTRIES: Industry[] = [
   { name: "Polymers", id: "1605600659908-0ef719419d41" },
 ];
 
-const img = (id: string, w = 900, h = 1100) =>
-  `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&crop=entropy&auto=format&q=70`;
+const img = (id: string, w = 760, h = 950) =>
+  `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&crop=entropy&auto=format&q=68`;
 
 /* -------------------------------------------------------------------------- */
 

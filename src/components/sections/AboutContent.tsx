@@ -159,7 +159,7 @@ function AboutStory() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1100&h=1200&fit=crop&crop=entropy&auto=format&q=74"
+              src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1200&auto=format&q=70"
               alt="Bulk chemical storage terminal at an Indian port"
               loading="lazy"
               className="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"

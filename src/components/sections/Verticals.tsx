@@ -45,8 +45,10 @@ const sectionTitle = "What we do";
    3 = Comprehensive Services. */
 const [vImport, vIndent, vExport, vServices] = verticals;
 
+// Byte-identical to NetworkShowcase/Gallery so the browser serves all three
+// from one download per photo (id already includes the "photo-" prefix).
 const img = (id: string) =>
-  `https://images.unsplash.com/${id}?q=80&w=1200&auto=format&fit=crop`;
+  `https://images.unsplash.com/${id}?w=1200&auto=format&q=70`;
 
 /* Each pillar paired with a real industrial photograph (Unsplash). */
 const SLIDES = [
