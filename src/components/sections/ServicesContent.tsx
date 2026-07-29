@@ -302,8 +302,8 @@ function ChainNode({
         width={w}
         height={h}
         rx={18}
-        fill={primary ? "rgba(225,27,34,0.12)" : "rgba(255,255,255,0.035)"}
-        stroke={primary ? "#E11B22" : "rgba(255,255,255,0.14)"}
+        fill={primary ? "rgba(225,27,34,0.10)" : "rgba(0,0,0,0.035)"}
+        stroke={primary ? "#E11B22" : "rgba(0,0,0,0.16)"}
         strokeWidth={primary ? 2 : 1.25}
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
