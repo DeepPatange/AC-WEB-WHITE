@@ -131,7 +131,7 @@ function MoleculeTile({
       style={{ x, y, scale }}
     >
       <div
-        className="relative aspect-square overflow-hidden rounded-3xl bg-[#f3f3f5] ring-1 ring-white/10"
+        className="relative aspect-square overflow-hidden rounded-3xl bg-[#17171b] ring-1 ring-black/20"
         style={{
           boxShadow:
             "inset 0 1px 0 rgba(255,255,255,0.10), 0 30px 70px -30px rgba(0,0,0,0.9)",
@@ -430,7 +430,7 @@ function MoleculeScene({ progress }: { progress: MotionValue<number> }) {
         ))}
         {/* Soft ink scrim behind the heading — the section's one blur blob,
             static, for headline contrast over the gathered field. */}
-        <div className="absolute left-1/2 top-1/2 h-64 w-[42rem] max-w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink/60 blur-3xl" />
+        <div className="absolute left-1/2 top-1/2 h-64 w-[42rem] max-w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink/85 blur-3xl" />
       </motion.div>
 
       <Container className="relative z-10 flex h-full flex-col justify-center py-10">
