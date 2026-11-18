@@ -79,7 +79,7 @@ function AppHero() {
 
             <motion.h1
               variants={fadeSoft}
-              className="mt-6 font-display font-bold leading-[1.03] tracking-[-0.03em] text-white text-[clamp(2.7rem,5.8vw,4.25rem)]"
+              className="mt-6 font-display font-semibold leading-[1.08] tracking-[-0.025em] text-white text-[clamp(2.25rem,5vw,3.75rem)]"
             >
               The trading desk,
               <br />

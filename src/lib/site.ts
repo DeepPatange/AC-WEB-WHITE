@@ -3,9 +3,12 @@
  * Single source of truth. Section components import from here so copy stays
  * consistent and the client can edit content in one place.
  *
- * Number canon (do not contradict anywhere):
- *   110,000+ MT annually · $168M / ₹1,400 Cr (FY 2022-23) · 58+ countries ·
- *   186+ active clients · tenure computed via yearsInBusiness().
+ * Number canon (do not contradict anywhere). Source: client "SALES DATA.xlsx"
+ * (consolidated), USD converted at ₹94.20 / USD (RBI reference rate):
+ *   198,000+ MT (FY 2025-26) · $153M / ₹1,445 Cr (FY 2025-26) · 60+ countries ·
+ *   500+ active clients · 3,000+ customers served · tenure via yearsInBusiness().
+ * Every USD figure on the site, including the historical growth series, is
+ * INR ÷ USD_INR_RATE. Change the rate in ONE place: USD_INR_RATE below.
  *
  * Client-input slots (empty until the client supplies real data — sections
  * must render nothing for empty slots, never placeholders or invented facts):
@@ -15,6 +18,12 @@
 
 export const FOUNDING_YEAR = 2009;
 
+/** USD/INR conversion used for every USD figure (RBI reference rate). */
+export const USD_INR_RATE = 94.2;
+
+/** Latest reported financial year for the headline figures. */
+export const LATEST_FY = "FY 2025-26";
+
 /** Tenure, computed — never hardcode a year count anywhere in copy. */
 export function yearsInBusiness(): number {
   return new Date().getFullYear() - FOUNDING_YEAR;
@@ -23,10 +32,10 @@ export function yearsInBusiness(): number {
 export const siteConfig = {
   name: "Accord Chemical Corporation",
   legalName: "Accord Chemicals Private Limited",
-  tagline: "Petrochemicals traded across 58 countries — from Mumbai, since 2009.",
+  tagline: "Petrochemicals traded across 60+ countries from Mumbai, since 2009.",
   established: FOUNDING_YEAR,
   description:
-    "Mumbai-based petrochemical trading house — imports, exports and indenting of commodity and specialty petrochemicals, moving 110,000+ metric tons a year between 58+ countries and India since 2009.",
+    "Mumbai-based petrochemical trading house engaged in the import, export and indenting of commodity and specialty petrochemicals. Since 2009, Accord has grown to 198,000+ metric tons a year across 60+ countries.",
   /**
    * Paste a PUBLISHED Spline runtime URL here (ends in .splinecode) to render
    * the client's real Spline hero. While empty, the custom WebGL logistics
@@ -75,7 +84,7 @@ export const nav = [
   { label: "Services", href: "/services" },
   { label: "Industries Served", href: "/industries-served" },
   { label: "Career", href: "/career" },
-  { label: "Gallery", href: "/gallery" },
+  { label: "Partners", href: "/partners" },
   { label: "Contact Us", href: "/contact-us" },
 ] as const;
 
@@ -103,7 +112,7 @@ export const appMeta = {
   url: "https://play.google.com/store/apps/details?id=com.accord.accordinteract",
   appStoreUrl: "https://apps.apple.com/in/app/accord-interact/id6756520729",
   tagline:
-    "The all-in-one platform for chemical-industry professionals — connecting customers, brokers, suppliers and sales teams to trade smarter and stay informed.",
+    "The all-in-one platform for chemical-industry professionals, connecting customers, brokers, suppliers and sales teams to trade smarter and stay informed.",
   rating: "5.0",
   downloads: "100+",
   category: "Business",
@@ -113,12 +122,12 @@ export const appMeta = {
     {
       icon: "LineChart",
       title: "Live market prices",
-      desc: "Real-time pricing across domestic, China, import/export, aromatics and Singapore (SGX) markets — by port, with ready & incoming stock and interactive charts from 1 day to 5 years.",
+      desc: "Real-time pricing across domestic, China, import/export, aromatics and Singapore (SGX) markets by port, with ready & incoming stock and interactive charts from 1 day to 5 years.",
     },
     {
       icon: "Handshake",
       title: "Seamless trading",
-      desc: "Place buy orders, submit bids and negotiate directly in-app — packing, delivery, port, tax and payment terms — with a transparent counteroffer-to-approval workflow.",
+      desc: "Place buy orders, submit bids and negotiate directly in-app on packing, delivery, port, tax and payment terms, with a transparent counteroffer-to-approval workflow.",
     },
     {
       icon: "Briefcase",
@@ -128,7 +137,7 @@ export const appMeta = {
     {
       icon: "Ship",
       title: "Supplier collaboration",
-      desc: "Suppliers receive product requests and submit detailed quotes — price, currency, terms, load/discharge ports, origin, make, ETA and vessel details.",
+      desc: "Suppliers receive product requests and submit detailed quotes covering price, currency, terms, load/discharge ports, origin, make, ETA and vessel details.",
     },
     {
       icon: "MessagesSquare",
@@ -143,7 +152,7 @@ export const appMeta = {
   ],
   roles: ["Customers", "Brokers", "Suppliers", "Sales teams"],
   screens: [
-    { src: "/app/screen-1.webp", label: "Transactions — orders, bids & enquiries" },
+    { src: "/app/screen-1.webp", label: "Transactions: orders, bids & enquiries" },
     { src: "/app/screen-2.webp", label: "Live market data & price charts" },
     { src: "/app/screen-3.webp", label: "Industry news & intelligence" },
     { src: "/app/screen-4.webp", label: "Trading tools & calculators" },
@@ -153,13 +162,13 @@ export const appMeta = {
 
 /** Hero overlay copy — Spline scene + text overlay ONLY. */
 export const hero = {
-  eyebrow: "Mumbai · Est. 2009 · 58+ countries",
+  eyebrow: "Mumbai · Est. 2009 · 60+ countries",
   headline: "Pioneering Petrochemical Excellence Since 2009",
   /** The words rendered in accord-red within the headline (accent → end). */
   headlineAccent: "Since 2009",
   subtext:
     "Accord Chemical Corporation, established in 2009, is a company actively engaged in Trading, Indenting, Distribution, Imports & Exports of various petrochemicals.",
-  trustChip: "Trusted since 2009 · 186+ clients",
+  trustChip: "Trusted since 2009 · 500+ active clients",
 } as const;
 
 /** 01 — About: "One desk from indent to delivery." */
@@ -167,28 +176,28 @@ export const aboutCopy = {
   eyebrow: "About Us",
   heading: "One desk from indent to delivery.",
   body: [
-    "Accord Chemical Corporation is among the top petrochemical distribution companies in India — engaged in the import, export and indenting of various petrochemicals. Headquartered in Mumbai with branch offices in Ahmedabad and Gandhidham, Gujarat, it has, since 2009, built a colossal distribution network across India and international markets, led by an ardent team of qualified professionals on a foundation of trust and transparency.",
-    "From 4,500 metric tons in its first year, the desk now moves 110,000+ metric tons a year across 58+ countries. What clients buy is certainty — consistent quality, cost-effectiveness, velocity and competence: producer-direct relationships, transparent indent pricing, and in-house clearing, storage, insurance and logistics, so one call covers the consignment. In 2014, the group established Accord Chemcorp Pvt. Ltd., broadening its sourcing and product portfolio to serve industrial applications more comprehensively.",
+    "Accord Chemical Corporation is among the top petrochemical distribution companies in India, engaged in the import, export and indenting of various petrochemicals. Headquartered in Mumbai with branch offices in Ahmedabad and Gandhidham, Gujarat, it has, since 2009, built a colossal distribution network across India and international markets, led by an ardent team of qualified professionals on a foundation of trust and transparency.",
+    "From 4,500 metric tons in its first year, Accord handled 198,000+ metric tons in FY 2025-26 and today serves 500+ active clients across 60+ countries. Clients choose Accord for consistent quality, cost-effectiveness, speed and competence: producer-direct relationships, transparent indent pricing, and in-house clearing, storage, insurance and logistics, so a single point of contact covers the entire consignment. In 2014, the group established Accord Chemcorp Pvt. Ltd., broadening its sourcing and product portfolio to serve industrial applications more comprehensively.",
   ],
   pillars: [
     {
       title: "Producer-direct",
-      desc: "Direct relationships with producers worldwide — producer pricing, transparent terms, no middle inventory.",
+      desc: "Direct relationships with producers worldwide, offering producer pricing, transparent terms and no intermediate inventory.",
     },
     {
-      title: "110,000+ MT a year",
-      desc: "From 4,500 tonnes in year one to 110,000+ metric tons annually — growth you can audit, not adjectives.",
+      title: "198,000+ MT a year",
+      desc: "From 4,500 tonnes in the first year to 198,000+ metric tons in FY 2025-26, a growth record backed by audited figures.",
     },
     {
       title: "End-to-end",
-      desc: "Clearing, storage, survey, insurance and inland logistics handled in-house — one desk accountable to your gate.",
+      desc: "Clearing, storage, survey, insurance and inland logistics handled in-house, with a single team accountable through to delivery.",
     },
   ],
   /** Verbatim from accordchemicals.com. */
   vision:
     "To evolve into a top-notch, globally recognised petrochemical trading company, with insistent growth and outstanding performance.",
   mission:
-    "To consistently deliver customer delight, elite-quality products and innovative services — committed to employee well-being, safety, and the growth of every stakeholder, alongside our socio-economic responsibility.",
+    "To consistently deliver customer delight, elite-quality products and innovative services, committed to employee well-being, safety, and the growth of every stakeholder, alongside our socio-economic responsibility.",
 } as const;
 
 /**
@@ -196,11 +205,15 @@ export const aboutCopy = {
  * Each stat appears exactly once here; other sections reference in prose only.
  */
 export const stats: Stat[] = [
-  { value: 110000, suffix: "+", label: "Metric tons a year" },
-  { value: 168, prefix: "$", suffix: "M", label: "Revenue, FY 2022-23", sublabel: "₹1,400 Cr" },
-  { value: 58, suffix: "+", label: "Countries" },
-  { value: 186, suffix: "+", label: "Active clients" },
+  { value: 198000, suffix: "+", label: "Metric tons", sublabel: "FY 2025-26" },
+  { value: 153, prefix: "$", suffix: "M", label: "Revenue", sublabel: "₹1,445 Cr · FY 2025-26" },
+  { value: 60, suffix: "+", label: "Countries" },
+  { value: 500, suffix: "+", label: "Active clients" },
+  { value: 3000, suffix: "+", label: "Customers served", sublabel: "Since 2009" },
 ];
+
+/** Footnote shown under the headline figures. */
+export const statsNote = `Source: consolidated sales, ${LATEST_FY}. USD at ₹${USD_INR_RATE.toFixed(2)} / USD (RBI reference rate).`;
 
 export interface Stat {
   value: number;
@@ -211,37 +224,78 @@ export interface Stat {
   sublabel?: string;
 }
 
+/**
+ * ICIS recognition — CLIENT-APPROVED SLOT. Renders on /about-us only when
+ * non-null. Fill with the latest verified ICIS ranking/recognition exactly as
+ * approved by the client, including the edition year and source, e.g.
+ *   { title: "ICIS Top 100 Chemical Distributors", detail: "Ranked #__ ...",
+ *     year: "2026", source: "ICIS Chemical Business, June 2026", url: "" }
+ * Never fill this with an unverified ranking.
+ */
+export const icisRecognition: {
+  title: string;
+  detail: string;
+  year: string;
+  source: string;
+  url?: string;
+} | null = null;
+
+/**
+ * Partners — CLIENT-INPUT SLOT. Logos and details to be supplied by the
+ * client (with permission to display). Add files to public/partners/ and list
+ * them here; until then the Partners section shows neutral placeholder tiles.
+ */
+export const partners: { name: string; logo: string; url?: string; category?: string }[] = [];
+
+/** Number of placeholder tiles shown while `partners` is empty. */
+export const PARTNER_PLACEHOLDERS = 8;
+
+/**
+ * Client testimonials — CLIENT-INPUT SLOT. Only real, approved testimonials.
+ * Never fabricate. While empty, the section shows designated placeholder
+ * cards that state testimonials are being collected.
+ */
+export const testimonials: {
+  quote: string;
+  name: string;
+  designation: string;
+  company: string;
+}[] = [];
+
+/** Number of placeholder cards shown while `testimonials` is empty. */
+export const TESTIMONIAL_PLACEHOLDERS = 3;
+
 /** 02 — What we do (Verticals). */
 export const verticalsIntro =
-  "Four ways petrochemicals move through Accord — from producer to plant gate.";
+  "Four ways petrochemicals move through Accord, from producer to plant gate.";
 
 export const verticals = [
   {
     id: "import",
     title: "Import & Distribution",
     blurb:
-      "We import on our own account and hold duty-paid stock in India — so you buy in INR, in the quantity you need, when you need it.",
+      "We import on our own account and hold duty-paid stock in India, so you buy in INR, in the quantity you need, when you need it.",
     icon: "Import",
   },
   {
     id: "indenting",
     title: "Indenting",
     blurb:
-      "Direct contracts between producer and buyer at producer pricing — transparent commission, no middle inventory.",
+      "Direct contracts between producer and buyer at producer pricing, with a transparent commission and no intermediate inventory.",
     icon: "Handshake",
   },
   {
     id: "exports",
     title: "Exports",
     blurb:
-      "Indian-origin petrochemicals shipped to buyers on five continents — documentation, inspection and freight handled end to end.",
+      "Indian-origin petrochemicals shipped to buyers on five continents, with documentation, inspection and freight handled end to end.",
     icon: "Globe",
   },
   {
     id: "services",
     title: "Comprehensive Services",
     blurb:
-      "Customs clearing, bonded storage, survey, marine insurance and inland logistics — one desk accountable for the whole consignment.",
+      "Customs clearing, bonded storage, survey, marine insurance and inland logistics, with one team accountable for the whole consignment.",
     icon: "Wrench",
   },
 ] as const;
@@ -270,7 +324,7 @@ export interface Credibility {
 
 /** 03 — Products. */
 export const productsIntro =
-  "Eight product families, sourced producer-direct and delivered on spec — with COA on every lot.";
+  "Eight product families, sourced producer-direct and delivered on specification, with a COA on every lot.";
 
 /**
  * Product-list PDF — CLIENT-INPUT slot. The "Download product list (PDF)"
@@ -318,13 +372,13 @@ export const products = [
   {
     name: "Custom Sourcing",
     slug: "custom-sourcing",
-    desc: "Don't see your molecule? We source niche and campaign-quantity chemicals through our producer network — send the spec.",
+    desc: "Don't see your molecule? We source niche and campaign-quantity chemicals through our producer network. Send us the specification.",
   },
 ] as const;
 
 /** 04 — Industries. */
 export const industriesIntro =
-  "Ten downstream industries buy through Accord — from paints and coatings to pharma and personal care.";
+  "Ten downstream industries source through Accord, from paints and coatings to pharmaceuticals and personal care.";
 
 /** Flat list — feeds the single slow ticker row (texture only). */
 export const industries = [
@@ -408,67 +462,77 @@ export const growthCopy = {
   eyebrow: "Track record",
   heading: "The record",
   intro:
-    "From 4,500 tonnes and $0.9M in our first year to 110,000 tonnes and $168M — every year on the record.",
-  caption: "FY 2009-10 to 2022-23, latest audited.",
+    "From 4,500 tonnes in our first year to 198,000 tonnes and $153M in FY 2025-26. Every year is on the record.",
+  caption: `FY 2009-10 to FY 2025-26. USD at ₹${USD_INR_RATE.toFixed(2)} / USD (RBI reference rate) for every year.`,
 } as const;
 
 /**
- * Growth story — real audited data from the client's "Quantum of Volume in
- * MTS and Revenue" chart. volumeKT = thousand metric tons, revenueUSD = USD
- * millions, revenueINR = INR crore. DO NOT EDIT — swap in FY 2023-24 /
- * 2024-25 rows only when the client delivers them.
+ * Growth story. volumeKT = thousand metric tons, revenueINR = INR crore
+ * (audited, from the client's "Quantum of Volume in MTS and Revenue" chart
+ * for FY 2009-10 to 2022-23, and "SALES DATA.xlsx" for FY 2023-24 onwards).
+ * revenueUSD (USD millions) is DERIVED from INR at USD_INR_RATE for every
+ * year, so the whole series uses one consistent rate. Edit INR only.
  */
-export const growth = [
-  { year: "2009-10", volumeKT: 4.5, revenueUSD: 0.92, revenueINR: 4.23 },
-  { year: "2010-11", volumeKT: 6.9, revenueUSD: 14.44, revenueINR: 67.36 },
-  { year: "2011-12", volumeKT: 10.9, revenueUSD: 18.92, revenueINR: 100.3 },
-  { year: "2012-13", volumeKT: 15.1, revenueUSD: 24.82, revenueINR: 145.28 },
-  { year: "2013-14", volumeKT: 26.0, revenueUSD: 36.07, revenueINR: 220.0 },
-  { year: "2014-15", volumeKT: 37.6, revenueUSD: 48.41, revenueINR: 314.65 },
-  { year: "2015-16", volumeKT: 36.6, revenueUSD: 40.94, revenueINR: 274.28 },
-  { year: "2016-17", volumeKT: 41.8, revenueUSD: 65.83, revenueINR: 427.9 },
-  { year: "2017-18", volumeKT: 56.2, revenueUSD: 70.44, revenueINR: 498.04 },
-  { year: "2018-19", volumeKT: 76.9, revenueUSD: 85.95, revenueINR: 593.06 },
-  { year: "2019-20", volumeKT: 71.45, revenueUSD: 71.45, revenueINR: 500.12 },
-  { year: "2020-21", volumeKT: 93.2, revenueUSD: 86.31, revenueINR: 647.35 },
-  { year: "2021-22", volumeKT: 90.2, revenueUSD: 138.9, revenueINR: 1155.23 },
-  { year: "2022-23", volumeKT: 110.2, revenueUSD: 168.3, revenueINR: 1400.01 },
+const growthRaw = [
+  { year: "2009-10", volumeKT: 4.5, revenueINR: 4.23 },
+  { year: "2010-11", volumeKT: 6.9, revenueINR: 67.36 },
+  { year: "2011-12", volumeKT: 10.9, revenueINR: 100.3 },
+  { year: "2012-13", volumeKT: 15.1, revenueINR: 145.28 },
+  { year: "2013-14", volumeKT: 26.0, revenueINR: 220.0 },
+  { year: "2014-15", volumeKT: 37.6, revenueINR: 314.65 },
+  { year: "2015-16", volumeKT: 36.6, revenueINR: 274.28 },
+  { year: "2016-17", volumeKT: 41.8, revenueINR: 427.9 },
+  { year: "2017-18", volumeKT: 56.2, revenueINR: 498.04 },
+  { year: "2018-19", volumeKT: 76.9, revenueINR: 593.06 },
+  // NOTE: volume 71.45 KT equals the old USD figure for this year; confirm with client.
+  { year: "2019-20", volumeKT: 71.45, revenueINR: 500.12 },
+  { year: "2020-21", volumeKT: 93.2, revenueINR: 647.35 },
+  { year: "2021-22", volumeKT: 90.2, revenueINR: 1155.23 },
+  { year: "2022-23", volumeKT: 110.2, revenueINR: 1400.01 },
+  { year: "2023-24", volumeKT: 172.2, revenueINR: 1374.29 },
+  { year: "2024-25", volumeKT: 176.5, revenueINR: 1369.78 },
+  { year: "2025-26", volumeKT: 198.0, revenueINR: 1445.65 },
 ] as const;
+
+export const growth = growthRaw.map((d) => ({
+  ...d,
+  revenueUSD: Math.round(((d.revenueINR * 10) / USD_INR_RATE) * 100) / 100,
+}));
 
 /** 06 — GlobalPresence → "58 countries. One desk." */
 export const presenceCopy = {
   eyebrow: "Presence",
-  heading: "58 countries. One desk.",
+  heading: "60+ countries. One trading desk.",
   intro:
-    "Producers in Houston, Rotterdam, Shanghai and Singapore; buyers from São Paulo to Sydney — every lane cleared through Mumbai.",
+    "Sourcing from producers across the Americas, Europe, the Middle East and Asia, and supplying buyers on five continents, all coordinated from our Mumbai headquarters.",
 } as const;
 
 /** 07 — Process: "How a consignment moves." Quiet, mono numerals. */
 export const processCopy = {
-  eyebrow: "Process",
-  heading: "How a consignment moves",
+  eyebrow: "Our Process",
+  heading: "From requirement to delivery",
 } as const;
 
 export const process: ProcessStep[] = [
   {
     step: "01",
-    title: "Enquire",
-    desc: "Send us the product, grade, volume and destination.",
+    title: "Requirement Analysis",
+    desc: "We assess your product, grade, specification, volume and destination to define the optimal sourcing route.",
   },
   {
     step: "02",
-    title: "Quote",
-    desc: "Indent or import pricing within one business day.",
+    title: "Strategic Sourcing & Pricing",
+    desc: "Competitive indent or import pricing from our global producer network, typically within one business day.",
   },
   {
     step: "03",
-    title: "Contract",
-    desc: "LC, DA or DP terms — COA and pre-shipment survey on every lot.",
+    title: "Contract & Quality Assurance",
+    desc: "Commercial terms under LC, DA or DP, with a certificate of analysis and pre-shipment inspection on every lot.",
   },
   {
     step: "04",
-    title: "Deliver",
-    desc: "Customs cleared, insured and tracked to your gate.",
+    title: "Logistics & Delivery",
+    desc: "Customs clearance, marine insurance and tracked inland logistics through to your facility.",
   },
 ];
 
@@ -483,7 +547,7 @@ export const contactCopy = {
   eyebrow: "Contact",
   heading: "Tell us what you need moved.",
   intro:
-    "Tell us the product, volume and destination — sourcing, indenting, export or logistics. Quotes within one business day.",
+    "Share the product, volume and destination for sourcing, indenting, export or logistics. We respond with a quotation within one business day.",
 } as const;
 
 /**
@@ -501,7 +565,7 @@ export const contactMeta = {
 export const footerCopy = {
   ctaHeadline: "Ready to move your next consignment?",
   oneLiner:
-    "Mumbai-based petrochemical trading house — imports, exports and indenting across 58+ countries since 2009.",
+    "Mumbai-based petrochemical trading house engaged in imports, exports and indenting across 60+ countries since 2009.",
   /** Itarsia relationship unconfirmed — render as a plain credit line. */
   byline: `Site by ${siteConfig.poweredBy}`,
   productsCollapsedLabel: "View all products",

@@ -1,146 +1,52 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
-import {
-  animate,
-  motion,
-  useInView,
-  useMotionValue,
-  useReducedMotion,
-} from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
-import StatNumber from "@/components/ui/StatNumber";
-import TradeArc, { type ArcPoint } from "@/components/ui/TradeArc";
-import { easeOut, fadeSoft, inView } from "@/lib/motion";
-import { presenceCopy, stats, yearsInBusiness } from "@/lib/site";
+import { fadeSoft, inView } from "@/lib/motion";
+import { presenceCopy } from "@/lib/site";
+import { HQ, REGIONS, countries, type Region } from "@/lib/countries";
+import mapPoints from "@/lib/map-points.json";
+import { cn } from "@/lib/utils";
 
-/* -------------------------------------------------------------------------- */
-/*  Geography — map annotations (coordinates/city names), not marketing copy.  */
-/*  All prose comes from presenceCopy in @/lib/site; the hubs below are the    */
-/*  exact cities that intro names, plus lanes for global spread.               */
-/* -------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------
+   06 · Global Presence. An interactive dotted world map:
+   - grey base world + every served country filled in brand red (pre-rendered
+     SVG layers, see scripts/generate-served-map.mjs);
+   - one marker per country (hover / focus / tap for its name and region);
+   - region filters that highlight a region's markers and list.
+   Country data lives in src/lib/countries.ts (provisional until the client
+   supplies the final list). Run `npm run map` after editing it.
+   -------------------------------------------------------------------------- */
 
-const MUMBAI = { city: "Mumbai", lat: 19.076, lng: 72.8777 } as const;
+type Filter = Region | "All";
 
-const HUBS = [
-  { city: "Houston", lat: 29.7604, lng: -95.3698 },
-  { city: "Rotterdam", lat: 51.9244, lng: 4.4777 },
-  { city: "Dubai", lat: 25.2048, lng: 55.2708 },
-  { city: "Singapore", lat: 1.3521, lng: 103.8198 },
-  { city: "Shanghai", lat: 31.2304, lng: 121.4737 },
-  { city: "São Paulo", lat: -23.5505, lng: -46.6333 },
-  { city: "Nairobi", lat: -1.2921, lng: 36.8219 },
-  { city: "Sydney", lat: -33.8688, lng: 151.2093 },
-] as const;
-
-/** Equirectangular projection into TradeArc's 0–100 box. */
-function project(lat: number, lng: number): ArcPoint {
-  return { x: (lng + 180) / 3.6, y: (90 - lat) / 1.8 };
-}
-
-/** Bow height for a lane — longer lanes arc higher, clamped so nothing clips. */
-function bow(from: ArcPoint, to: ArcPoint): number {
-  return Math.max(7, Math.min(18, Math.abs(to.x - from.x) * 0.3));
-}
-
-/* -------------------------------------------------------------------------- */
-/*  LaneArc — one shipping lane. Draws ONCE when the map enters the viewport   */
-/*  (motionValue + animate(), zero React re-renders per frame), then holds     */
-/*  static. Under prefers-reduced-motion TradeArc renders complete.            */
-/* -------------------------------------------------------------------------- */
-
-function LaneArc({
-  from,
-  to,
-  active,
-  delay,
-}: {
-  from: ArcPoint;
-  to: ArcPoint;
-  active: boolean;
-  delay: number;
-}) {
-  const progress = useMotionValue(0);
-  const reduced = useReducedMotion();
-
-  useEffect(() => {
-    if (!active || reduced) return;
-    const controls = animate(progress, 1, {
-      duration: 1.2,
-      delay,
-      ease: easeOut,
-    });
-    return () => controls.stop();
-  }, [active, reduced, delay, progress]);
-
-  return (
-    <TradeArc
-      progress={progress}
-      from={from}
-      to={to}
-      curve={bow(from, to)}
-      nodeAt={1}
-      strokeWidth={1}
-      nodeSize={5}
-      flow={active}
-      flowDelay={delay + 1.3}
-    />
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/*  Main section — 06 · "58 countries. One desk." Medium intensity: arcs draw  */
-/*  once on entry then hold; tiles are static mono tabular numbers (maskRise). */
-/* -------------------------------------------------------------------------- */
+const points = mapPoints.countries as Record<string, { x: number; y: number }>;
+const hq = mapPoints.hq;
 
 export default function GlobalPresence() {
-  const mapRef = useRef<HTMLDivElement>(null);
-  // Trigger later — the lanes should draw as you arrive at the map, not before.
-  const arcsActive = useInView(mapRef, {
-    once: true,
-    amount: 0.6,
-    margin: "0px 0px -12% 0px",
-  });
+  const [filter, setFilter] = useState<Filter>("All");
+  const [hovered, setHovered] = useState<string | null>(null);
 
-  // Static dotted world base — pre-generated at build time into
-  // public/world-dots.svg (see scripts/generate-world-map.mjs). Generating it
-  // in the browser cost ~635 ms of blocked main thread and inlined ~964 KB of
-  // SVG into the HTML; serving it as a file makes it a cacheable ~24 KB (gzip).
+  const byRegion = useMemo(
+    () =>
+      REGIONS.map((region) => ({
+        region,
+        list: countries
+          .filter((c) => c.region === region)
+          .sort((a, b) => a.name.localeCompare(b.name)),
+      })),
+    []
+  );
 
-  const mumbai = project(MUMBAI.lat, MUMBAI.lng);
-
-  // Presence tiles — static references (the count-ups live in the About band).
-  const countriesStat = stats.find((s) => s.label === "Countries");
-  const tiles: { value: number; suffix?: string; label: string }[] = [
-    ...(countriesStat
-      ? [
-          {
-            value: countriesStat.value,
-            suffix: countriesStat.suffix,
-            label: "Countries served",
-          },
-        ]
-      : []),
-    { value: HUBS.length, label: "Lanes on the map" },
-    { value: yearsInBusiness(), label: "Years on the record" },
-    { value: 1, label: "Desk · Mumbai" },
-  ];
+  const hoveredCountry = countries.find((c) => c.iso3 === hovered) ?? null;
+  const visibleGroups =
+    filter === "All" ? byRegion : byRegion.filter((g) => g.region === filter);
 
   return (
-    <section
-      id="presence"
-      className="section-quiet zone-cool noise relative overflow-hidden"
-    >
-      {/* Trade Arc boundary — full-bleed, self-centers to max-w-container. */}
-
-      {/* The section's single static blur blob (never animated). */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[26rem] w-[42rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-radial-fade opacity-40 blur-2xl"
-      />
-
+    <section id="presence" className="section-quiet relative overflow-hidden">
       <Container className="relative">
         <SectionHeading
           number="06"
@@ -149,143 +55,179 @@ export default function GlobalPresence() {
           intro={presenceCopy.intro}
         />
 
-        {/* ---------------------------------------------------------------- */}
-        {/*  Dotted world map — lanes draw once on entry, then hold static.  */}
-        {/* ---------------------------------------------------------------- */}
         <motion.div
           variants={fadeSoft}
           initial="hidden"
           whileInView="show"
           viewport={inView}
-          className="mx-auto mt-12 w-full max-w-5xl sm:mt-16"
+          className="mt-10 sm:mt-12"
         >
-          <div className="glass-card p-4 sm:p-6 lg:p-8">
-            {/* Decorative visual — the intro prose names the same lanes. */}
+          {/* Region filters */}
+          <div
+            role="group"
+            aria-label="Filter countries by region"
+            className="flex flex-wrap gap-2"
+          >
+            {(["All", ...REGIONS] as Filter[]).map((r) => {
+              const count =
+                r === "All"
+                  ? countries.length
+                  : countries.filter((c) => c.region === r).length;
+              const active = filter === r;
+              return (
+                <button
+                  key={r}
+                  type="button"
+                  onClick={() => setFilter(r)}
+                  aria-pressed={active}
+                  className={cn(
+                    "rounded-full border px-3.5 py-1.5 text-[13px] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accord-red",
+                    active
+                      ? "border-accord-red bg-accord-red text-white"
+                      : "border-white/15 text-steel-300 hover:border-accord-red/50 hover:text-white"
+                  )}
+                >
+                  {r === "All" ? "All regions" : r}
+                  <span className={cn("ml-1.5", active ? "opacity-75" : "text-steel-500")}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Map */}
+          <div className="glass-card mt-5 p-3 sm:p-5">
             <div
-              ref={mapRef}
-              aria-hidden
-              className="relative aspect-[2/1] w-full select-none overflow-hidden rounded-lg"
+              className="relative w-full select-none"
+              style={{ aspectRatio: String(mapPoints.aspect) }}
+              onMouseLeave={() => setHovered(null)}
             >
               <Image
                 src="/world-dots.svg"
                 alt=""
-                width={1056}
-                height={495}
-                draggable={false}
+                fill
                 unoptimized
-                className="pointer-events-none h-full w-full object-cover [mask-image:linear-gradient(to_bottom,transparent,white_10%,white_90%,transparent)]"
+                draggable={false}
+                className="pointer-events-none object-contain"
+              />
+              <Image
+                src="/world-dots-served.svg"
+                alt=""
+                fill
+                unoptimized
+                draggable={false}
+                className="pointer-events-none object-contain"
               />
 
-              {/* Shipping lanes — Mumbai fans out to each hub. */}
-              {HUBS.map((hub, i) => (
-                <LaneArc
-                  key={hub.city}
-                  from={mumbai}
-                  to={project(hub.lat, hub.lng)}
-                  active={arcsActive}
-                  delay={i * 0.12}
-                />
-              ))}
-
-              {/* Mumbai origin — static node + halo ring (no pulse loops). */}
-              <span
-                className="absolute block h-2 w-2 rounded-full bg-accord-red shadow-[0_0_14px_4px_rgba(225,27,34,0.5)]"
-                style={{
-                  left: `${mumbai.x}%`,
-                  top: `${mumbai.y}%`,
-                  transform: "translate(-50%, -50%)",
-                }}
-              />
-              <span
-                className="absolute block h-5 w-5 rounded-full border border-accord-red/35"
-                style={{
-                  left: `${mumbai.x}%`,
-                  top: `${mumbai.y}%`,
-                  transform: "translate(-50%, -50%)",
-                }}
-              />
-              <motion.span
-                className="absolute whitespace-nowrap rounded-md border border-white/10 bg-ink-900/85 px-1.5 py-0.5 font-mono text-[10px] tracking-wider text-white"
-                style={{ left: `${mumbai.x}%`, top: `${mumbai.y}%`, x: "-50%" }}
-                initial={{ opacity: 0, y: 16 }}
-                animate={arcsActive ? { opacity: 1, y: 10 } : undefined}
-                transition={{ duration: 0.4, ease: easeOut, delay: 0.2 }}
-              >
-                {MUMBAI.city}
-              </motion.span>
-
-              {/* Hub labels — settle in after their lane lands (≥sm only). */}
-              {HUBS.map((hub, i) => {
-                const p = project(hub.lat, hub.lng);
+              {/* Country markers */}
+              {countries.map((c) => {
+                const p = points[c.iso3];
+                if (!p) return null;
+                const inFilter = filter === "All" || c.region === filter;
+                const isHover = hovered === c.iso3;
                 return (
-                  <motion.span
-                    key={hub.city}
-                    className="absolute hidden whitespace-nowrap rounded-md border border-white/10 bg-ink-900/85 px-1.5 py-0.5 font-mono text-[10px] tracking-wider text-steel-300 sm:block"
-                    style={{ left: `${p.x}%`, top: `${p.y}%`, x: "-50%" }}
-                    initial={{ opacity: 0, y: -16 }}
-                    animate={arcsActive ? { opacity: 1, y: -26 } : undefined}
-                    transition={{
-                      duration: 0.4,
-                      ease: easeOut,
-                      delay: 0.55 + i * 0.12,
-                    }}
+                  <button
+                    key={c.iso3}
+                    type="button"
+                    aria-label={`${c.name}, ${c.region}`}
+                    onMouseEnter={() => setHovered(c.iso3)}
+                    onFocus={() => setHovered(c.iso3)}
+                    onBlur={() => setHovered(null)}
+                    onClick={() => setHovered(c.iso3)}
+                    className="group absolute flex h-5 w-5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full focus-visible:outline-none"
+                    style={{ left: `${p.x}%`, top: `${p.y}%` }}
                   >
-                    {hub.city}
-                  </motion.span>
+                    <span
+                      className={cn(
+                        "block rounded-full border-2 border-[#fff] bg-accord-red shadow-sm transition-all duration-200",
+                        isHover ? "h-3.5 w-3.5" : inFilter ? "h-2.5 w-2.5" : "h-1.5 w-1.5 opacity-30",
+                        "group-focus-visible:ring-2 group-focus-visible:ring-accord-red"
+                      )}
+                    />
+                  </button>
                 );
               })}
+
+              {/* HQ */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2"
+                style={{ left: `${hq.x}%`, top: `${hq.y}%` }}
+              >
+                <span className="absolute left-1/2 top-1/2 block h-7 w-7 -translate-x-1/2 -translate-y-1/2 animate-pulse-ring rounded-full border border-accord-red/60" />
+                <span className="block h-3 w-3 rounded-full bg-accord-redDark ring-2 ring-[#fff]" />
+              </span>
+
+              {/* Tooltip */}
+              <AnimatePresence>
+                {hoveredCountry && points[hoveredCountry.iso3] && (
+                  <motion.div
+                    key={hoveredCountry.iso3}
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                    className="pointer-events-none absolute z-10 -translate-x-1/2 whitespace-nowrap rounded-lg border border-white/10 bg-ink px-3 py-2 text-left shadow-lg"
+                    style={{
+                      left: `${Math.min(92, Math.max(8, points[hoveredCountry.iso3].x))}%`,
+                      top: `calc(${points[hoveredCountry.iso3].y}% + 14px)`,
+                    }}
+                  >
+                    <p className="text-sm font-semibold text-white">{hoveredCountry.name}</p>
+                    <p className="text-xs text-steel-400">{hoveredCountry.region}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
-            {/* Mono data line — legend + desk coordinates (technical voice). */}
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-white/10 pt-4 font-mono text-[10px] uppercase tracking-widest text-steel-400">
-              <span className="inline-flex items-center gap-4">
-                <span className="inline-flex items-center gap-2">
-                  <span
-                    aria-hidden
-                    className="h-1.5 w-1.5 rounded-full bg-accord-red shadow-[0_0_8px_2px_rgba(225,27,34,0.5)]"
-                  />
-                  Mumbai desk
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <span
-                    aria-hidden
-                    className="h-1.5 w-1.5 rounded-full border border-accord-red/60 bg-accord-red/30"
-                  />
-                  Partner hub
-                </span>
+            {/* Legend */}
+            <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/10 pt-3 text-xs text-steel-400">
+              <span className="inline-flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-accord-redDark ring-2 ring-[#fff]" />
+                Headquarters: {HQ.name}
               </span>
-              <span>
-                {MUMBAI.lat.toFixed(4)}° N · {MUMBAI.lng.toFixed(4)}° E
+              <span className="inline-flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full border-2 border-[#fff] bg-accord-red shadow-sm" />
+                Countries served
+              </span>
+              <span className="ml-auto hidden sm:inline">
+                Hover or tap a marker for details
               </span>
             </div>
           </div>
-        </motion.div>
 
-        {/* ---------------------------------------------------------------- */}
-        {/*  Presence tiles — static tabular mono numbers, maskRise reveal.  */}
-        {/*  No count-ups here: those are exclusive to the About proof band. */}
-        {/* ---------------------------------------------------------------- */}
-        <div className="mx-auto mt-12 grid w-full max-w-5xl grid-cols-2 gap-x-6 gap-y-10 sm:mt-16 lg:grid-cols-4">
-          {tiles.map((tile, i) => (
-            <div
-              key={tile.label}
-              className="group relative border-t border-white/10 pt-5 transition-colors duration-300 hover:border-white/25"
-            >
-              {/* Informational-tile accent: 1px red rule draws along the top. */}
-              <span
-                aria-hidden
-                className="absolute left-0 top-[-1px] h-px w-full origin-left scale-x-0 bg-accord-red transition-transform duration-500 ease-out group-hover:scale-x-100"
-              />
-              <StatNumber
-                value={tile.value}
-                suffix={tile.suffix}
-                label={tile.label}
-                delay={i * 0.08}
-                numberClassName="text-3xl sm:text-4xl"
-              />
-            </div>
-          ))}
-        </div>
+          {/* Country list by region (also the accessible text alternative) */}
+          <div className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-5">
+            {visibleGroups.map(({ region, list }) => (
+              <div key={region}>
+                <h3 className="border-b border-white/10 pb-2 text-sm font-semibold text-white">
+                  {region}
+                  <span className="ml-1.5 font-normal text-steel-500">{list.length}</span>
+                </h3>
+                <ul className="mt-2.5 flex flex-wrap gap-x-3 gap-y-1 text-[13px] leading-relaxed text-steel-300 lg:flex-col lg:gap-0">
+                  {list.map((c) => (
+                    <li key={c.iso3}>
+                      <button
+                        type="button"
+                        onMouseEnter={() => setHovered(c.iso3)}
+                        onMouseLeave={() => setHovered(null)}
+                        onFocus={() => setHovered(c.iso3)}
+                        onBlur={() => setHovered(null)}
+                        className={cn(
+                          "text-left transition-colors hover:text-accord-red focus-visible:text-accord-red focus-visible:outline-none",
+                          hovered === c.iso3 && "text-accord-red"
+                        )}
+                      >
+                        {c.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </Container>
     </section>
   );

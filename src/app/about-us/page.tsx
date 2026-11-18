@@ -6,7 +6,7 @@ import Footer from "@/components/sections/Footer";
 export const metadata: Metadata = {
   title: "About Us | Accord Chemical Corporation",
   description:
-    "Accord Chemical Corporation is among India's top petrochemical distribution companies — import, export and indenting of petrochemicals from Mumbai since 2009, across 58+ countries.",
+    "Accord Chemical Corporation is among India's leading petrochemical distribution companies, engaged in the import, export and indenting of petrochemicals from Mumbai since 2009 across 60+ countries.",
   alternates: { canonical: "/about-us" },
 };
 

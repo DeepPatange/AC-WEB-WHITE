@@ -44,7 +44,9 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "var(--font-sans)", "sans-serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+        // No monospace in the brand system: `font-mono` utilities render in Inter
+        // with tabular figures (see globals.css) for clean, aligned numbers.
+        mono: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
       maxWidth: { container: "1280px" },
       borderRadius: { "4xl": "2rem" },

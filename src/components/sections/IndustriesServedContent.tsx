@@ -97,10 +97,10 @@ function Hero() {
             variants={fadeSoft}
             className="mt-6 max-w-xl text-base leading-relaxed text-steel-300 sm:text-lg"
           >
-            Accord Chemical Corporation stands out as the largest petrochemical
-            distribution company — leading in the import, export and indenting of
-            diverse petrochemicals from our Mumbai headquarters, and supplying
-            every downstream industry below.
+            Accord Chemical Corporation is a leading petrochemical distribution
+            company, engaged in the import, export and indenting of a diverse
+            portfolio of petrochemicals from our Mumbai headquarters. We supply
+            each of the downstream industries below.
           </motion.p>
         </motion.div>
       </Container>
@@ -140,13 +140,15 @@ export default function IndustriesServedContent() {
                 <li
                   key={ind.name}
                   onMouseEnter={() => setActive(i)}
-                  className="group border-b border-white/10 first:border-t"
+                  onFocus={() => setActive(i)}
+                  tabIndex={0}
+                  className="group border-b border-white/10 outline-none first:border-t focus-visible:bg-white/[0.03]"
                 >
-                  <div className="flex items-center gap-5 py-4 transition-all duration-300 group-hover:pl-3">
+                  <div className="flex items-center gap-5 py-3.5 transition-all duration-200 group-hover:pl-3">
                     <span className="w-8 shrink-0 font-mono text-xs tracking-widest text-steel-500 transition-colors group-hover:text-accord-red">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span className="type-section flex-1 text-steel-300 transition-colors duration-300 group-hover:text-white">
+                    <span className="flex-1 font-display text-[1.625rem] font-semibold tracking-[-0.015em] text-steel-300 transition-colors duration-200 group-hover:text-white">
                       {ind.name}
                     </span>
                     <ArrowUpRight
@@ -167,10 +169,10 @@ export default function IndustriesServedContent() {
                       key={active}
                       src={img(INDUSTRIES[active].id)}
                       alt={INDUSTRIES[active].name}
-                      initial={{ opacity: 0, scale: 1.08 }}
+                      initial={{ opacity: 0, scale: 1.03 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5, ease: "easeOut" }}
+                      transition={{ duration: 0.28, ease: "easeOut" }}
                       className="absolute inset-0 h-full w-full object-cover"
                     />
                   </AnimatePresence>

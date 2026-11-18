@@ -120,7 +120,7 @@ function PillarRow({
         0{index + 1}
       </span>
       <span className="sr-only">
-        {slide.title} — {slide.blurb}
+        {slide.title}: {slide.blurb}
       </span>
       <TextStaggerHover
         aria-hidden
@@ -287,7 +287,7 @@ export default function Verticals() {
     <section id={SECTION_ID} className="section-peak zone-cool noise relative">
       {/* Trade Arc boundary — node lands at the section-number chip. */}
 
-      <PinnedScene height="280vh" reducedFallback={<ReducedVerticals />}>
+      <PinnedScene height="200vh" reducedFallback={<ReducedVerticals />}>
         {(progress) => <Stage progress={progress} />}
       </PinnedScene>
     </section>

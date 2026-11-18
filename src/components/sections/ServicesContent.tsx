@@ -130,7 +130,7 @@ function ServicesHero() {
             variants={fadeSoft}
             className="mt-6 max-w-xl text-base leading-relaxed text-steel-300 sm:text-lg"
           >
-            One of India&rsquo;s largest petrochemical distribution houses —
+            One of India&rsquo;s leading petrochemical distribution houses,
             specialising in the import, export, distribution and indenting of
             diverse petrochemicals, and moving them seamlessly from port to plant
             gate.
@@ -180,7 +180,7 @@ function ServicesIntro() {
               className="text-base leading-relaxed text-steel-300"
             >
               Accord Chemical Corporation is one of the largest petrochemical
-              distribution companies — specialising in the import, export,
+              distribution companies, specialising in the import, export,
               distribution and indenting of diverse petrochemicals. As your
               trusted partner, we ensure seamless transport, catering to the
               dynamic demands of the industry nationwide.
@@ -200,7 +200,7 @@ function ServicesIntro() {
                 Storage & discharge ports
               </p>
               <div className="flex flex-wrap gap-2">
-                {["Kandla", "JNPT – Nhava Sheva", "Hazira", "Mumbai"].map(
+                {["Kandla", "JNPT (Nhava Sheva)", "Hazira", "Mumbai"].map(
                   (port) => (
                     <span
                       key={port}
@@ -498,8 +498,8 @@ function LogisticalPresence() {
           </h2>
           <p className="mt-5 text-base leading-relaxed text-steel-300">
             Cargo lands at India&rsquo;s major ports, moves through the Accord
-            logistics hub, and is distributed to regional warehouses — one
-            accountable chain from vessel to gate.
+            logistics hub, and is distributed to regional warehouses through
+            one accountable chain, from vessel to customer.
           </p>
         </div>
 

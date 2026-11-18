@@ -6,16 +6,32 @@ import { ArrowRight, Handshake, Ship, Truck, Warehouse } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import StatNumber from "@/components/ui/StatNumber";
-import { aboutCopy, stats } from "@/lib/site";
+import { aboutCopy, stats, statsNote } from "@/lib/site";
 import { fadeSoft, inView, stagger } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
-/* The desk, drawn as four moves — "indent to delivery" made visual. */
-const FLOW = [
-  { Icon: Handshake, step: "Indent", note: "Producer-direct" },
-  { Icon: Ship, step: "Import", note: "Duty-paid stock" },
-  { Icon: Warehouse, step: "Clear & store", note: "In-house" },
-  { Icon: Truck, step: "Deliver", note: "To your gate" },
+/* The business model in four stages, from sourcing to delivery. */
+export const FLOW = [
+  {
+    Icon: Handshake,
+    step: "Strategic Sourcing",
+    note: "Producer-direct procurement from global manufacturers",
+  },
+  {
+    Icon: Ship,
+    step: "Import & Indenting",
+    note: "Trade execution, documentation and duty-paid stock",
+  },
+  {
+    Icon: Warehouse,
+    step: "Clearance & Warehousing",
+    note: "In-house customs clearance and port storage",
+  },
+  {
+    Icon: Truck,
+    step: "Distribution & Delivery",
+    note: "Insured, tracked logistics to the customer's facility",
+  },
 ];
 
 /* Count-up cascade (brief §4.4) — the site's ONLY count-ups. */
@@ -51,8 +67,8 @@ export default function About() {
             viewport={inView}
             className="mt-6 text-base leading-relaxed text-steel-300 sm:text-lg"
           >
-            Among India&rsquo;s top petrochemical distribution houses — moving
-            product from producer to plant gate since 2009.
+            Among India&rsquo;s leading petrochemical distribution houses,
+            moving product from producer to customer since 2009.
           </motion.p>
           <motion.div
             variants={fadeSoft}
@@ -78,30 +94,32 @@ export default function About() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
-          className="relative mt-16 lg:mt-20"
+          className="relative mt-12 lg:mt-14"
         >
           {/* Connecting rail through the icon centres (desktop) */}
           <span
             aria-hidden
-            className="pointer-events-none absolute left-[12%] right-[12%] top-8 hidden h-px bg-gradient-to-r from-accord-red/50 via-white/15 to-accord-red/50 sm:block"
+            className="pointer-events-none absolute left-[12.5%] right-[12.5%] top-7 hidden h-px bg-white/15 sm:block"
           />
-          <ol className="grid grid-cols-2 gap-y-10 sm:grid-cols-4 sm:gap-y-0">
+          <ol className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-4 sm:gap-x-6 sm:gap-y-0">
             {FLOW.map(({ Icon, step, note }, i) => (
               <motion.li
                 key={step}
                 variants={fadeSoft}
                 className="relative flex flex-col items-center text-center"
               >
-                <span className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full border border-accord-red/30 bg-ink text-accord-red shadow-[0_0_0_6px_rgba(255,255,255,1)]">
+                <span className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full border border-accord-red/30 bg-ink text-accord-red shadow-[0_0_0_6px_rgba(255,255,255,1)]">
                   <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden />
                 </span>
-                <span className="mt-4 font-mono text-[11px] uppercase tracking-widest text-steel-500">
-                  0{i + 1}
+                <span className="mt-4 text-xs font-semibold tracking-[0.14em] text-accord-red">
+                  STEP 0{i + 1}
                 </span>
-                <h3 className="mt-1.5 font-display text-lg font-semibold text-white">
+                <h3 className="mt-1.5 text-base font-semibold leading-snug text-white sm:text-[17px]">
                   {step}
                 </h3>
-                <p className="mt-0.5 text-sm text-steel-400">{note}</p>
+                <p className="mt-1.5 max-w-[15rem] text-sm leading-relaxed text-steel-400">
+                  {note}
+                </p>
               </motion.li>
             ))}
           </ol>
@@ -113,12 +131,12 @@ export default function About() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
-          className="mt-16 grid grid-cols-2 gap-x-6 gap-y-10 border-t border-white/10 pt-10 lg:mt-20 lg:grid-cols-4"
+          className="mt-12 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-white/10 pt-10 sm:grid-cols-3 lg:mt-14 lg:grid-cols-5"
         >
           {stats.map((stat, i) => (
             <div
               key={stat.label}
-              className={cn(i > 0 && "lg:border-l lg:border-white/10 lg:pl-8")}
+              className={cn(i > 0 && "lg:border-l lg:border-white/10 lg:pl-6")}
             >
               <StatNumber
                 value={stat.value}
@@ -130,13 +148,14 @@ export default function About() {
                 duration={COUNT_DURATION}
               />
               {stat.sublabel && (
-                <span className="mt-1.5 block font-mono text-xs tracking-widest text-steel-400">
+                <span className="mt-1 block text-xs text-steel-400">
                   {stat.sublabel}
                 </span>
               )}
             </div>
           ))}
         </motion.div>
+        <p className="mt-6 text-xs text-steel-500">{statsNote}</p>
       </Container>
     </section>
   );

@@ -22,6 +22,10 @@ const nextConfig = {
      browser serves them from cache instead of re-downloading on every visit.
      Note: these filenames are fixed, so if you ever swap an asset, rename it (or
      hard-refresh) to bust the cache. */
+  /* The Gallery page was replaced by Partners & Testimonials. */
+  async redirects() {
+    return [{ source: "/gallery", destination: "/partners", permanent: true }];
+  },
   async headers() {
     return [
       {

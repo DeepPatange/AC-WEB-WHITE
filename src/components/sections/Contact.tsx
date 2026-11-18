@@ -1,5 +1,6 @@
 "use client";
 
+import mapPoints from "@/lib/map-points.json";
 import {
   useEffect,
   useRef,
@@ -33,20 +34,13 @@ import { siteConfig, contactCopy, contactMeta, cta, products } from "@/lib/site"
 /*  Static (quiet section): no loops, no arcs — the node just sits and glows.  */
 /* -------------------------------------------------------------------------- */
 
-const MUMBAI = { lat: 19.076, lng: 72.8777 };
-
-/** Same equirectangular projection GlobalPresence's map uses (800×400 box). */
-function projectPoint(lat: number, lng: number): { x: number; y: number } {
-  return {
-    x: (lng + 180) * (800 / 360),
-    y: (90 - lat) * (400 / 180),
-  };
-}
-
-const PIN = projectPoint(MUMBAI.lat, MUMBAI.lng);
+/** Mumbai HQ, positioned with the same Mercator projection the dotted map is
+    generated with (src/lib/map-points.json, via `npm run map`), scaled into
+    the 800×400 overlay box. */
+const PIN = { x: (mapPoints.hq.x / 100) * 800, y: (mapPoints.hq.y / 100) * 400 };
 
 /* The dotted world base is pre-generated at build time into
-   public/world-dots.svg (see scripts/generate-world-map.mjs). Generating it
+   public/world-dots.svg (see scripts/generate-served-map.mjs). Generating it
    here at MODULE SCOPE previously blocked the main thread for ~635 ms during
    chunk evaluation, before hydration, on every home-page load. */
 
@@ -207,7 +201,7 @@ export default function Contact() {
 
       if (res.ok && data?.ok) {
         setStatus("success");
-        setFeedback(data.message ?? "Thanks — we'll be in touch shortly.");
+        setFeedback(data.message ?? "Thank you. We'll be in touch shortly.");
         setForm(EMPTY_FORM);
       } else {
         setStatus("error");

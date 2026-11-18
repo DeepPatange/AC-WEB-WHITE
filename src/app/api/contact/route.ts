@@ -72,7 +72,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     console.log("[contact] new enquiry:", payload);
 
     return NextResponse.json(
-      { ok: true, message: "Thanks — we'll be in touch shortly." },
+      { ok: true, message: "Thank you. We'll be in touch shortly." },
       { status: 200 }
     );
   } catch {

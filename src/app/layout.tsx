@@ -1,30 +1,27 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Sora, JetBrains_Mono } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { MotionConfig } from "framer-motion";
 import "./globals.css";
 import { siteConfig } from "@/lib/site";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from "@/components/ui/ScrollProgress";
-import ContactPill from "@/components/ui/ContactPill";
+import ChatWidget from "@/components/ui/ChatWidget";
 
+// Typography system: two professional, highly legible sans-serifs.
+//  - Inter: body copy, navigation, buttons, labels and small data (the
+//    former mono "technical" voice now also maps to Inter, see --font-mono).
+//  - Plus Jakarta Sans: headings and headline figures; clean, corporate,
+//    with open, easily read numerals.
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
-// Sora — a modern geometric grotesque with strong bold weights. Carries all
-// display type (headings) for a confident, professional, contemporary voice.
-const display = Sora({
+const display = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  weight: ["500", "600", "700"],
   variable: "--font-display",
-  display: "swap",
-});
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
   display: "swap",
 });
 
@@ -50,7 +47,7 @@ export const metadata: Metadata = {
         url: "/og.jpg",
         width: 1200,
         height: 630,
-        alt: "Accord Chemical Corporation — petrochemical trade, moved with precision",
+        alt: "Accord Chemical Corporation, petrochemical trading since 2009",
       },
     ],
   },
@@ -70,7 +67,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${display.variable} ${mono.variable}`}
+      className={`${inter.variable} ${display.variable}`}
     >
       <body>
         {/* WHITE-THEME tritone for the Spline hero. Maps the scene onto a
@@ -117,8 +114,9 @@ export default function RootLayout({
         <MotionConfig reducedMotion="user">
           <ScrollProgress />
           <SmoothScroll>{children}</SmoothScroll>
-          {/* The ONE floating affordance (§7.6). Back-to-top lives in Footer. */}
-          <ContactPill />
+          {/* The ONE floating affordance: the site-wide AI assistant, which
+              also carries WhatsApp / call / email hand-offs to sales. */}
+          <ChatWidget />
         </MotionConfig>
       </body>
     </html>

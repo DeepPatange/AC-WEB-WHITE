@@ -6,7 +6,8 @@ import { easeOut, maskRise } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /**
- * Headline statistic in the mono "technical data" voice (brief §3 / §6).
+ * Headline statistic. Clean display figures (Plus Jakarta Sans, semibold,
+ * tabular lining numerals) with the brand-red prefix/suffix accent.
  *
  * - `live` — MotionValue-driven count-up + spring suffix pop. Allowed ONLY in
  *   the About stats proof band; cascade left→right with the `delay` prop.
@@ -58,7 +59,7 @@ export default function StatNumber({
     <div ref={ref} className={cn("flex flex-col items-start", className)}>
       <div
         className={cn(
-          "flex items-baseline font-mono text-4xl font-medium tracking-tight text-white sm:text-5xl",
+          "type-stat flex items-baseline text-[2.25rem] text-white sm:text-[2.75rem]",
           numberClassName
         )}
       >
@@ -102,7 +103,7 @@ export default function StatNumber({
           </span>
         )}
       </div>
-      <span className="mt-2 font-mono text-xs uppercase tracking-widest text-steel-400">
+      <span className="mt-2 text-sm font-medium text-steel-300">
         {label}
       </span>
     </div>

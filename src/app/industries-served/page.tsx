@@ -6,7 +6,7 @@ import Footer from "@/components/sections/Footer";
 export const metadata: Metadata = {
   title: "Industries Served | Accord Chemical Corporation",
   description:
-    "The downstream industries Accord Chemical Corporation supplies — paints, coatings, packaging, adhesives, resins, textiles, pharmaceuticals, agrochemicals, automobiles, polymers and more.",
+    "The downstream industries Accord Chemical Corporation supplies: paints, coatings, packaging, adhesives, resins, textiles, pharmaceuticals, agrochemicals, automobiles, polymers and more.",
   alternates: { canonical: "/industries-served" },
 };
 

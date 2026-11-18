@@ -73,12 +73,12 @@ const SUPPLY = [
   {
     icon: Handshake,
     title: "Producer-direct",
-    desc: "Direct relationships with producers worldwide — producer pricing, transparent terms, no middle inventory.",
+    desc: "Direct relationships with producers worldwide, offering producer pricing, transparent terms and no intermediate inventory.",
   },
   {
     icon: PackageSearch,
     title: "Custom sourcing",
-    desc: "Niche and campaign-quantity chemicals sourced through our producer network — send us the spec.",
+    desc: "Niche and campaign-quantity chemicals sourced through our producer network. Send us the specification.",
   },
   {
     icon: Route,
@@ -208,7 +208,7 @@ function EnquireLink({
   return (
     <Link
       href={`${CONTACT_PATH}?product=${slug}`}
-      aria-label={`${cta.enquire} — ${name}`}
+      aria-label={`${cta.enquire}: ${name}`}
       className={cn(
         "group/enq inline-flex items-center gap-1.5 rounded-sm text-sm font-medium text-steel-300 transition-colors duration-300 hover:text-accord-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accord-red/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink",
         className
@@ -329,9 +329,9 @@ function FamilyIndex() {
             Eight families, one desk.
           </h2>
           <p className="mt-5 text-base leading-relaxed text-steel-300">
-            Each family is quoted on indent or from duty-paid stock in India —
-            tell us the grade, volume and destination, and the quote follows
-            within one business day.
+            Each family is quoted on indent or from duty-paid stock in India.
+            Share the grade, volume and destination, and we will send a
+            quotation within one business day.
           </p>
         </div>
 

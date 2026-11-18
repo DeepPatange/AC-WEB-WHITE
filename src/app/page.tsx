@@ -10,7 +10,10 @@ import Growth from "@/components/sections/Growth";
 import GlobalPresence from "@/components/sections/GlobalPresence";
 import Process from "@/components/sections/Process";
 import Career from "@/components/sections/Career";
-import Gallery from "@/components/sections/Gallery";
+import {
+  PartnersSection,
+  TestimonialsSection,
+} from "@/components/sections/Partners";
 import Contact from "@/components/sections/Contact";
 import AppBand from "@/components/sections/AppBand";
 import Footer from "@/components/sections/Footer";
@@ -32,7 +35,8 @@ export default function Home() {
         <GlobalPresence />
         <Process />
         <Career />
-        <Gallery />
+        <PartnersSection />
+        <TestimonialsSection />
         <Contact />
       </main>
       <Footer />

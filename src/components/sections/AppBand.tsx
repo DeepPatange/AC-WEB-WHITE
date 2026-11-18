@@ -44,12 +44,12 @@ export default function AppBand() {
                 <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-accord-red">
                   Accord Interact
                 </p>
-                <h2 className="font-display text-2xl font-bold tracking-[-0.02em] text-white sm:text-3xl">
+                <h2 className="font-display text-2xl font-semibold tracking-[-0.015em] text-white sm:text-3xl">
                   The trading desk, on your phone.
                 </h2>
                 <p className="mt-3 max-w-xl text-sm leading-relaxed text-steel-300 sm:text-base">
                   Live market prices, in-app trading, broker &amp; supplier tools
-                  and real-time chat — free on Android and iOS.
+                  and real-time chat. Free on Android and iOS.
                 </p>
                 <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11px] uppercase tracking-widest text-steel-400">
                   <span className="inline-flex items-center gap-1 text-white">

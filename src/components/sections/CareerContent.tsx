@@ -57,7 +57,7 @@ const ROLES: { title: string; icon: LucideIcon; form: string }[] = [
 ];
 
 const careersMailto = `mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(
-  "Career enquiry — Accord Chemical Corporation"
+  "Career enquiry: Accord Chemical Corporation"
 )}`;
 
 /* -------------------------------------------------------------------------- */
@@ -106,7 +106,7 @@ function Hero() {
           >
             Enabling our human capital is one of our core principles. As a
             people-centric, process-driven organisation, we run a sustainable
-            talent-management framework — a high-energy workplace built on
+            talent-management framework, a high-energy workplace built on
             inclusivity and equal opportunity, with fair, transparent HR
             practices that help every employee build competencies and plan their
             career progression.
@@ -171,7 +171,7 @@ function OpenRoles() {
             Areas where we&rsquo;re hiring
           </h2>
           <p className="mt-5 text-base leading-relaxed text-steel-300">
-            Pick a role and apply in minutes — each opens its dedicated
+            Pick a role and apply in minutes; each opens its dedicated
             application form.
           </p>
         </div>

@@ -410,7 +410,7 @@ function ChartFigure({
           <YearReadout
             progress={progress}
             years={data.map((d) => d.year)}
-            className="pointer-events-none absolute right-3 top-1 z-0 select-none font-mono text-[clamp(1.9rem,4.5vw,3.4rem)] font-medium leading-none tracking-tight text-white/[0.15]"
+            className="pointer-events-none absolute right-3 top-1 z-0 select-none font-display text-[clamp(1.75rem,4vw,3rem)] font-semibold leading-none tracking-tight text-white/[0.15]"
           />
 
           <svg
@@ -693,8 +693,10 @@ function KpiBand({ series }: { series: RevenueKey }) {
   const cfg = SERIES[series];
   const first = growth[0];
   const latest = growth[growth.length - 1];
+  // Volume multiple: a revenue multiple off the very small first-year base
+  // (₹4.23 Cr) reads as an outlier rather than a useful figure.
   const multiple =
-    first[series] > 0 ? Math.round(latest[series] / first[series]) : 0;
+    first.volumeKT > 0 ? Math.round(latest.volumeKT / first.volumeKT) : 0;
 
   const tiles = [
     {
@@ -716,7 +718,7 @@ function KpiBand({ series }: { series: RevenueKey }) {
       decimals: 0,
       prefix: "≈ ",
       suffix: "×",
-      label: `Revenue growth since FY ${first.year}`,
+      label: `Volume growth since FY ${first.year}`,
     },
   ];
 
@@ -764,12 +766,12 @@ export default function Growth() {
     // NOTE: no overflow-hidden here — it would break the sticky pin.
     <section
       id="growth"
-      aria-label={`${growthCopy.eyebrow} — ${growthCopy.heading}`}
+      aria-label={`${growthCopy.eyebrow}: ${growthCopy.heading}`}
       className="section-peak zone-warm relative"
     >
 
       <PinnedScene
-        height="200vh"
+        height="160vh"
         reducedFallback={
           <StaticScene series={series} onSeriesChange={setSeries} />
         }

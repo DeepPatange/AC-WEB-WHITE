@@ -176,7 +176,7 @@ function EnquireLink({
   return (
     <a
       href={`#contact?product=${slug}`}
-      aria-label={`${cta.enquire} — ${name}`}
+      aria-label={`${cta.enquire}: ${name}`}
       className={cn(
         "group/enq inline-flex shrink-0 items-center gap-1.5 rounded-sm text-sm font-medium text-steel-300 transition-colors duration-300 hover:text-accord-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accord-red/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink",
         className
@@ -473,7 +473,7 @@ export default function Products() {
       {/* md+: the ~300vh pinned choreography. Reduced motion renders the
           same static heading + ledger via reducedFallback. */}
       <PinnedScene
-        height="300vh"
+        height="220vh"
         className="hidden md:block"
         reducedFallback={<StaticProducts />}
       >

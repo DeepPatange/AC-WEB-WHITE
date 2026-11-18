@@ -6,7 +6,7 @@ import Footer from "@/components/sections/Footer";
 export const metadata: Metadata = {
   title: "Services | Accord Chemical Corporation",
   description:
-    "Import, export, distribution and indenting of petrochemicals — CHA & surveyor, port bulk storage, survey & insurance, and PAN-India logistics from Accord Chemical Corporation.",
+    "Import, export, distribution and indenting of petrochemicals, CHA & surveyor, port bulk storage, survey & insurance, and PAN-India logistics from Accord Chemical Corporation.",
   alternates: { canonical: "/services" },
 };
 

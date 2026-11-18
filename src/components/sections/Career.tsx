@@ -17,12 +17,12 @@ const POINTS = [
   {
     icon: LineChart,
     title: "Grow with us",
-    body: "4,500 to 110,000+ tonnes a year since 2009 — a desk that keeps scaling.",
+    body: "From 4,500 to 198,000+ tonnes a year since 2009, a business that keeps scaling.",
   },
   {
     icon: Globe2,
     title: "Global exposure",
-    body: "Work across 58+ countries, from sourcing at origin to last-mile delivery.",
+    body: "Work across 60+ countries, from sourcing at origin to last-mile delivery.",
   },
   {
     icon: Users,
@@ -32,7 +32,7 @@ const POINTS = [
 ];
 
 const careersMailto = `mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(
-  "Career enquiry — Accord Chemical Corporation"
+  "Career enquiry: Accord Chemical Corporation"
 )}`;
 
 export default function Career() {
@@ -49,7 +49,7 @@ export default function Career() {
           <SectionHeading
             eyebrow="Careers"
             title="Build a career in global chemical trade"
-            intro="Accord is always looking for people who want to move real cargo across the world — in sales, sourcing, logistics, compliance or operations. If that's you, send your CV and we'll be in touch."
+            intro="Accord is always looking for people who want to move real cargo across the world in sales, sourcing, logistics, compliance or operations. If that's you, send your CV and we'll be in touch."
           />
 
           <motion.ul

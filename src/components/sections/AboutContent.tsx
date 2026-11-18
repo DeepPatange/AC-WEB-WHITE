@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
+  Award,
   Building2,
   Factory,
   Globe2,
   MapPin,
-  Quote,
   Target,
   Telescope,
   TrendingUp,
@@ -15,7 +15,16 @@ import {
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import StatNumber from "@/components/ui/StatNumber";
-import { FOUNDING_YEAR, aboutCopy, stats } from "@/lib/site";
+import { FLOW } from "@/components/sections/About";
+import {
+  FOUNDING_YEAR,
+  LATEST_FY,
+  aboutCopy,
+  icisRecognition,
+  processCopy,
+  stats,
+  statsNote,
+} from "@/lib/site";
 import { fadeSoft, inView, stagger } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -29,14 +38,15 @@ const AT_A_GLANCE = [
   { label: "Established", value: `${FOUNDING_YEAR}` },
   { label: "Headquarters", value: "Mumbai, India" },
   { label: "Branch offices", value: "Ahmedabad · Gandhidham" },
-  { label: "Global reach", value: "58+ countries" },
+  { label: "Global reach", value: "60+ countries" },
+  { label: "Active clients", value: "500+" },
 ];
 
 const MILESTONES = [
   {
     year: "2009",
     title: "The desk opens",
-    desc: "Founded in Mumbai and moving 4,500 metric tons in its first year — built on a foundation of trust and transparency.",
+    desc: "Founded in Mumbai, handling 4,500 metric tons in its first year on a foundation of trust and transparency.",
   },
   {
     year: "2014",
@@ -44,9 +54,9 @@ const MILESTONES = [
     desc: "A sister company established to broaden sourcing and the product portfolio, serving industrial applications more comprehensively.",
   },
   {
-    year: "Today",
-    title: "110,000+ MT a year",
-    desc: "A colossal distribution network across India and 58+ countries, backed by branch offices in Ahmedabad and Gandhidham.",
+    year: LATEST_FY,
+    title: "198,000+ MT a year",
+    desc: "A distribution network spanning India and 60+ countries, serving 500+ active clients with branch offices in Ahmedabad and Gandhidham.",
   },
 ];
 
@@ -67,7 +77,7 @@ const LOCATIONS = [
 
 function AboutHero() {
   return (
-    <section className="relative overflow-hidden pt-28 sm:pt-32">
+    <section className="relative overflow-hidden pt-24 sm:pt-28">
       <div
         aria-hidden
         className="pointer-events-none absolute -right-[6%] -top-[10%] h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgba(225,27,34,0.16),transparent_62%)]"
@@ -84,7 +94,7 @@ function AboutHero() {
           <span className="text-steel-300">About Us</span>
         </nav>
 
-        <div className="mt-10 grid items-end gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="mt-8 grid items-end gap-10 lg:grid-cols-12 lg:gap-16">
           <motion.div
             variants={stagger(0.1)}
             initial="hidden"
@@ -107,9 +117,9 @@ function AboutHero() {
               variants={fadeSoft}
               className="mt-6 max-w-xl text-base leading-relaxed text-steel-300 sm:text-lg"
             >
-              Among India&rsquo;s top petrochemical distribution houses —
-              importing, exporting and indenting a diverse basket of
-              petrochemicals, and moving them from producer to plant gate.
+              Among India&rsquo;s leading petrochemical distribution houses,
+              importing, exporting and indenting a diverse portfolio of
+              petrochemicals and delivering them from producer to customer.
             </motion.p>
           </motion.div>
 
@@ -224,7 +234,7 @@ function AboutTimeline() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="relative mt-14 grid gap-10 md:grid-cols-3 md:gap-8"
+          className="relative mt-10 grid gap-10 md:grid-cols-3 md:gap-8"
         >
           {/* Connecting line (desktop) */}
           <span
@@ -237,7 +247,7 @@ function AboutTimeline() {
                 aria-hidden
                 className="block h-3.5 w-3.5 rounded-full bg-accord-red shadow-[0_0_14px_2px_rgba(225,27,34,0.55)] ring-4 ring-ink"
               />
-              <p className="mt-5 font-display text-3xl font-semibold text-white">
+              <p className="mt-5 font-display text-2xl font-semibold text-white">
                 {m.year}
               </p>
               <h3 className="mt-2 text-[15px] font-semibold uppercase tracking-wide text-accord-red">
@@ -269,11 +279,11 @@ function AboutStats() {
           viewport={{ once: true, amount: 0.3 }}
           className="glass-card relative overflow-hidden p-8 sm:p-10"
         >
-          <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
             {stats.map((stat, i) => (
               <div
                 key={stat.label}
-                className={cn(i > 0 && "lg:border-l lg:border-white/10 lg:pl-8")}
+                className={cn(i > 0 && "lg:border-l lg:border-white/10 lg:pl-6")}
               >
                 <StatNumber
                   value={stat.value}
@@ -285,14 +295,105 @@ function AboutStats() {
                   duration={1.4}
                 />
                 {stat.sublabel && (
-                  <span className="mt-1.5 block font-mono text-xs tracking-widest text-steel-400">
+                  <span className="mt-1 block text-xs text-steel-400">
                     {stat.sublabel}
                   </span>
                 )}
               </div>
             ))}
           </div>
+          <p className="mt-8 border-t border-white/10 pt-4 text-xs text-steel-500">
+            {statsNote}
+          </p>
         </motion.div>
+      </Container>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Business process: the four-stage model, sourcing to delivery               */
+/* -------------------------------------------------------------------------- */
+
+function AboutProcess() {
+  return (
+    <section className="section-quiet">
+      <Container>
+        <div className="max-w-2xl">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-accord-red">
+            {processCopy.eyebrow}
+          </p>
+          <h2 className="type-section text-balance text-white">
+            {processCopy.heading}
+          </h2>
+        </div>
+        <motion.ol
+          variants={stagger(0.1)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {FLOW.map(({ Icon, step, note }, i) => (
+            <motion.li
+              key={step}
+              variants={fadeSoft}
+              className="glass-card flex flex-col p-6"
+            >
+              <div className="flex items-center justify-between">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-accord-red/25 bg-accord-red/[0.1] text-accord-red">
+                  <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                </span>
+                <span className="text-xs font-semibold tracking-[0.14em] text-steel-500">
+                  STEP 0{i + 1}
+                </span>
+              </div>
+              <h3 className="type-card mt-5 text-white">{step}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-steel-300">{note}</p>
+            </motion.li>
+          ))}
+        </motion.ol>
+      </Container>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  ICIS recognition: renders only once the client approves the details       */
+/* -------------------------------------------------------------------------- */
+
+function AboutRecognition() {
+  if (!icisRecognition) return null;
+  const r = icisRecognition;
+  return (
+    <section className="section-quiet">
+      <Container>
+        <div className="glass-card flex flex-col gap-6 p-8 sm:flex-row sm:items-center sm:p-10">
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-accord-red/25 bg-accord-red/[0.1] text-accord-red">
+            <Award className="h-7 w-7" strokeWidth={1.75} aria-hidden />
+          </span>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accord-red">
+              Industry recognition · {r.year}
+            </p>
+            <h2 className="mt-2 font-display text-2xl font-semibold text-white">
+              {r.title}
+            </h2>
+            <p className="mt-2 max-w-2xl text-base leading-relaxed text-steel-300">
+              {r.detail}
+            </p>
+            <p className="mt-3 text-xs text-steel-500">
+              Source:{" "}
+              {r.url ? (
+                <a href={r.url} target="_blank" rel="noopener noreferrer" className="underline hover:text-accord-red">
+                  {r.source}
+                </a>
+              ) : (
+                r.source
+              )}
+            </p>
+          </div>
+        </div>
       </Container>
     </section>
   );
@@ -311,7 +412,7 @@ function AboutCapabilities() {
             Why Accord
           </p>
           <h2 className="type-section text-balance text-white">
-            What clients actually buy is certainty.
+            Reliability our clients can plan around.
           </h2>
         </div>
 
@@ -320,17 +421,14 @@ function AboutCapabilities() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
-          className="mt-12 flex flex-col"
+          className="mt-10 flex flex-col"
         >
-          {CAPABILITIES.map(({ title, desc, Icon }, i) => (
+          {CAPABILITIES.map(({ title, desc, Icon }) => (
             <motion.div
               key={title}
               variants={fadeSoft}
-              className="group grid grid-cols-[auto_1fr] items-start gap-5 border-t border-white/10 py-7 transition-colors duration-300 last:border-b hover:bg-white/[0.02] sm:grid-cols-[6rem_auto_1fr] sm:gap-8"
+              className="group grid grid-cols-[auto_1fr] items-start gap-5 border-t border-white/10 py-6 transition-colors duration-300 last:border-b hover:bg-white/[0.02] sm:grid-cols-[auto_1fr] sm:gap-6"
             >
-              <span className="hidden font-display text-4xl font-semibold text-white/10 transition-colors duration-300 group-hover:text-accord-red/40 sm:block">
-                {String(i + 1).padStart(2, "0")}
-              </span>
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-accord-red/25 bg-accord-red/[0.14] text-accord-red transition-transform duration-300 group-hover:-translate-y-0.5">
                 <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden />
               </span>
@@ -377,12 +475,6 @@ function AboutVisionMission() {
               <span
                 aria-hidden
                 className="absolute inset-y-8 left-0 w-[3px] rounded-full bg-gradient-to-b from-accord-red to-accord-redDark"
-              />
-              <Quote
-                aria-hidden
-                className="absolute -right-3 -top-3 h-24 w-24 rotate-180 text-white/[0.04]"
-                strokeWidth={1}
-                fill="currentColor"
               />
               <div className="relative flex items-center gap-3">
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-accord-red/25 bg-accord-red/[0.14] text-accord-red">
@@ -462,6 +554,8 @@ export default function AboutContent() {
       <AboutStory />
       <AboutTimeline />
       <AboutStats />
+      <AboutRecognition />
+      <AboutProcess />
       <AboutCapabilities />
       <AboutVisionMission />
       <AboutLocations />

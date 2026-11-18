@@ -86,7 +86,7 @@ export default function Navbar() {
         {/* LEFT — full brand lockup (mark + wordmark are one asset). */}
         <Link
           href={resolve("#home")}
-          aria-label={`${siteConfig.name} — home`}
+          aria-label={`${siteConfig.name} home`}
           className={cn(
             "group/logo relative flex items-center rounded-xl",
             focusRing

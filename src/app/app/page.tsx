@@ -4,9 +4,9 @@ import AppContent from "@/components/sections/AppContent";
 import Footer from "@/components/sections/Footer";
 
 export const metadata: Metadata = {
-  title: "Accord Interact — the chemical trading app | Accord Chemical Corporation",
+  title: "Accord Interact: the chemical trading app | Accord Chemical Corporation",
   description:
-    "Accord Interact is the all-in-one Android app for chemical-industry professionals — live market prices, in-app trading and bids, broker & supplier tools, real-time chat and industry intelligence. Free on Google Play.",
+    "Accord Interact is the all-in-one Android app for chemical-industry professionals, with live market prices, in-app trading and bids, broker & supplier tools, real-time chat and industry intelligence. Free on Google Play.",
   alternates: { canonical: "/app" },
 };
 

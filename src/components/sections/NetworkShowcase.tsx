@@ -75,15 +75,15 @@ export default function NetworkShowcase() {
               The network in motion
             </motion.p>
             <motion.h2 variants={fadeSoft} className="type-section text-white">
-              From the world&rsquo;s ports and refineries to your plant gate.
+              From the world&rsquo;s ports and refineries to your facility.
             </motion.h2>
             <motion.p
               variants={fadeSoft}
               className="mt-5 max-w-xl text-base/relaxed text-steel-300"
             >
               We source at origin, clear and ship through Mumbai, and deliver
-              across 58 countries — 110,000+ metric tons of commodity and
-              specialty petrochemicals a year.
+              across 60+ countries, handling 198,000+ metric tons of commodity
+              and specialty petrochemicals in FY 2025-26.
             </motion.p>
           </motion.div>
         </Container>

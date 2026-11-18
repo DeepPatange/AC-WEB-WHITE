@@ -6,7 +6,7 @@ import Footer from "@/components/sections/Footer";
 export const metadata: Metadata = {
   title: "Career | Accord Chemical Corporation",
   description:
-    "Build a career at Accord Chemical Corporation — a people-centric petrochemical trading house in Mumbai. Open roles in Sales, Procurement, Business Development, Logistics and Accounts.",
+    "Build a career at Accord Chemical Corporation, a people-centric petrochemical trading house in Mumbai. Open roles in Sales, Procurement, Business Development, Logistics and Accounts.",
   alternates: { canonical: "/career" },
 };
 
