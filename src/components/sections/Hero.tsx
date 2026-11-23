@@ -38,6 +38,17 @@ const H1_DELAY = 0.15;
 const H1_STAGGER = 0.04;
 const H1_BEAT = H1_STAGGER * 2.5;
 
+/* The white/red recolour of the live scene is an SVG `filter: url(#…)` on its
+   WebGL canvas (globals.css). WebKit (desktop Safari, and EVERY iOS browser,
+   since they all run on WebKit) does not apply SVG filters to a WebGL canvas,
+   so there the scene would fade in over the poster in its original BLUE.
+   Those browsers keep the pre-tinted poster instead (which also spares iPhones
+   the ~4.2MB Spline download). Chromium, Edge and Firefox are unaffected. */
+function webkitIgnoresCanvasFilter() {
+  const ua = navigator.userAgent;
+  return /AppleWebKit\//.test(ua) && !/(Chrome|Chromium)\//.test(ua);
+}
+
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const prefersReduced = useReducedMotion();
@@ -47,7 +58,7 @@ export default function Hero() {
      poster is the hero until then; the scene fades in after. */
   const [sceneReady, setSceneReady] = useState(false);
   useEffect(() => {
-    if (prefersReduced) return;
+    if (prefersReduced || webkitIgnoresCanvasFilter()) return;
     const w = window as unknown as {
       requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
       cancelIdleCallback?: (id: number) => void;
